@@ -7,7 +7,7 @@ dotenv.config(); // Load .env variables
 const REDIS_HOST = process.env.REDIS_HOST || '127.0.0.1';
 const REDIS_PORT = process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379;
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
-const CONTAINER_NAME = process.env.HOSTNAME || 'unknown-container'; // 👈 Pod/Container name
+const CONTAINER_NAME = process.env.POD_NAME || "unknown";
 
 const app = express();
 

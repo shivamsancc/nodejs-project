@@ -19,17 +19,21 @@ spec:
           image: shivamsancc/nodejs-project
           ports:
             - name: http
-              containerPort: 3000   # Node.js app listens on 3000
+              containerPort: 3000
               protocol: TCP
           env:
-            - name: REDIS_HOST      # Redis Service name
+            - name: REDIS_HOST
               value: "redis-service"
             - name: REDIS_PORT
               value: "6379"
-            - name: PORT            # Node.js app port
+            - name: PORT
               value: "3000"
             - name: NODE_ENV
               value: "production"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name   # 👈 inject Pod name
           volumeMounts:
             - name: localtime
               mountPath: /etc/localtime
