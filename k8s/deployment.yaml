@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: test
+  labels:
+    app: test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: test
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+        - name: test
+          image: shivamsancc/nodejs-project
+          ports:
+            - name: http
+              containerPort: 3000   # Node.js app listens on 3000
+              protocol: TCP
+          env:
+            - name: REDIS_HOST      # Redis Service name
+              value: "redis-service"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: PORT            # Node.js app port
+              value: "3000"
+            - name: NODE_ENV
+              value: "production"
+          volumeMounts:
+            - name: localtime
+              mountPath: /etc/localtime
+      volumes:
+        - name: localtime
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Shanghai

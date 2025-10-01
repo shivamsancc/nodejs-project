@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-service
+  labels:
+    app: test
+spec:
+  type: LoadBalancer   # 👈 works as ClusterIP+external access in cloud; in Kind, use port-forward
+  selector:
+    app: test
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80         # external port (LoadBalancer/NodePort)
+      targetPort: 3000 # containerPort from ReplicaSet
